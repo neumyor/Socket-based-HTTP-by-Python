@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>注册页面</title>
+    <script>
+        function register() {
+            var url = '/register';
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = "text";
+            xhr.open('POST', url);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");
+
+            var formData = new FormData();
+            formData.append("username", document.getElementById('username').value);
+            formData.append("password", document.getElementById('password').value);
+            xhr.send(formData);
+
+            xhr.onreadystatechange = function (e) {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    window.location.replace('/login');
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+<span style="background: aquamarine;color: brown">注册页面</span>
+<form action="register" method="post">
+    <label for="username"> 用户名：</label>
+    <input type="text" name="username" id="username" placeholder="请输入用户名">
+    <label for="password">密码：</label>
+    <input type="password" name="password" id="password" placeholder="请输入密码">
+</form>
+<button onclick="register()">注册</button>
+</body>
+</html>

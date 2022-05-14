@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <script>
+        function login() {
+            var url = '/login';
+            var xhr = new XMLHttpRequest();
+            xhr.responseType = "text";
+            xhr.open('POST', url);
+            xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded;");
+
+            var formData = new FormData();
+            formData.append("username", document.getElementById('username').value);
+            formData.append("password", document.getElementById('password').value);
+            xhr.send(formData);
+
+            xhr.onreadystatechange = function (e) {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    let obj = JSON.parse(xhr.responseText);
+                    console.log(obj);
+                    localStorage.setItem('token', obj.token);
+                    window.location.replace('/success');
+                } else {
+                    window.location.replace('/fail');
+                }
+            };
+        }
+    </script>
+</head>
+<body>
+登录页面
+<form action="login" method="post" id="login-form">
+    <label for="username"> 用户名：</label>
+    <input type="text" name="username" id="username" placeholder="请输入用户名">
+    <label for="password">密码：</label>
+    <input type="password" name="password" id="password" placeholder="请输入密码">
+</form>
+
+<button onclick="login()">登录</button>
+
+</body>
+</html>
